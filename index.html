@@ -80,7 +80,9 @@
       --font-display: "Cormorant Garamond", Georgia, serif;
       --font-body: "Outfit", Arial, sans-serif;
       --shadow: 0 24px 80px rgba(0, 0, 0, .45);
-      --transition: .38s cubic-bezier(.4, 0, .2, 1);
+      /* Curva de transição mais suave para o tema */
+      --transition-theme: .85s cubic-bezier(.4, 0, .2, 1);
+      --transition-ui: .38s cubic-bezier(.4, 0, .2, 1);
     }
 
     body[data-theme="light"] {
@@ -97,6 +99,7 @@
 
     *, *::before, *::after { box-sizing: border-box; }
     html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+    
     body {
       margin: 0;
       background: var(--black);
@@ -105,7 +108,23 @@
       font-weight: 300;
       line-height: 1.7;
       overflow-x: hidden;
-      transition: background-color .75s cubic-bezier(.4, 0, .2, 1), color .75s cubic-bezier(.4, 0, .2, 1);
+      /* Transição global do corpo mais lenta e suave */
+      transition: background-color var(--transition-theme), color var(--transition-theme);
+    }
+
+    /* Efeito de Overlay para a transição (simula o gradient de mudança) */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: var(--black);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-theme);
+      z-index: 9999;
+    }
+    body.theme-transitioning::after {
+      opacity: 0.05;
     }
 
     a { color: inherit; }
@@ -176,11 +195,11 @@
       text-decoration: none;
       text-transform: uppercase;
       transition:
-        background-color .38s cubic-bezier(.4, 0, .2, 1),
-        border-color .38s cubic-bezier(.4, 0, .2, 1),
-        color .38s cubic-bezier(.4, 0, .2, 1),
-        transform .38s cubic-bezier(.34, 1.56, .64, 1),
-        box-shadow .38s cubic-bezier(.4, 0, .2, 1);
+        background-color var(--transition-ui),
+        border-color var(--transition-ui),
+        color var(--transition-ui),
+        transform var(--transition-ui),
+        box-shadow var(--transition-ui);
       white-space: normal;
     }
 
@@ -222,8 +241,8 @@
       transition:
         transform .45s cubic-bezier(.4, 0, .2, 1),
         box-shadow .45s cubic-bezier(.4, 0, .2, 1),
-        border-color .75s cubic-bezier(.4, 0, .2, 1),
-        background .75s cubic-bezier(.4, 0, .2, 1);
+        border-color var(--transition-theme),
+        background var(--transition-theme);
     }
 
     .card-adv::before {
@@ -256,7 +275,7 @@
     #topbar a {
       color: var(--orange);
       text-decoration: none;
-      transition: color .38s cubic-bezier(.4, 0, .2, 1);
+      transition: color var(--transition-ui);
     }
 
     #topbar a:hover { color: var(--orange-2); }
@@ -268,10 +287,10 @@
       right: 0;
       top: 0;
       transition:
-        background-color .75s cubic-bezier(.4, 0, .2, 1),
-        border-color .75s cubic-bezier(.4, 0, .2, 1),
-        padding .38s cubic-bezier(.4, 0, .2, 1),
-        top .38s cubic-bezier(.4, 0, .2, 1);
+        background-color var(--transition-theme),
+        border-color var(--transition-theme),
+        padding var(--transition-ui),
+        top var(--transition-ui);
       z-index: 1030;
     }
 
@@ -315,7 +334,7 @@
       padding: .65rem .8rem !important;
       position: relative;
       text-transform: uppercase;
-      transition: color .38s cubic-bezier(.4, 0, .2, 1);
+      transition: color var(--transition-ui);
     }
 
     .nav-link::after {
@@ -326,7 +345,7 @@
       left: 50%;
       position: absolute;
       transform: translateX(-50%);
-      transition: width .38s cubic-bezier(.4, 0, .2, 1);
+      transition: width var(--transition-ui);
       width: 0;
     }
 
@@ -360,7 +379,7 @@
       letter-spacing: .02em;
       min-height: 56px;
       text-decoration: none;
-      transition: color .38s cubic-bezier(.4, 0, .2, 1);
+      transition: color var(--transition-ui);
     }
 
     .bottom-nav-link i {
@@ -371,9 +390,9 @@
       height: 30px;
       justify-content: center;
       transition:
-        background-color .38s cubic-bezier(.4, 0, .2, 1),
-        color .38s cubic-bezier(.4, 0, .2, 1),
-        box-shadow .38s cubic-bezier(.4, 0, .2, 1);
+        background-color var(--transition-ui),
+        color var(--transition-ui),
+        box-shadow var(--transition-ui);
       width: 30px;
     }
 
@@ -404,8 +423,8 @@
       z-index: 1040;
       box-shadow: var(--shadow);
       transition:
-        background-color .75s cubic-bezier(.4, 0, .2, 1),
-        border-color .75s cubic-bezier(.4, 0, .2, 1),
+        background-color var(--transition-theme),
+        border-color var(--transition-theme),
         transform .38s cubic-bezier(.34, 1.56, .64, 1),
         box-shadow .38s cubic-bezier(.4, 0, .2, 1);
     }
@@ -442,9 +461,9 @@
     #topbar, #footer, #mainNav, .mobile-bottom-nav,
     .trust-strip, .hero-oab, .stat-block,
     .faq-item, .privacy-note, .legal-notice, .map-container,
-    .portrait-shell, .profile-frame {
-      transition-property: background, background-color, border-color, color;
-      transition-duration: .75s;
+    .portrait-shell, .profile-frame, .form-adv .form-control, .form-adv .form-select {
+      transition-property: background, background-color, border-color, color, box-shadow;
+      transition-duration: var(--transition-theme);
       transition-timing-function: cubic-bezier(.4, 0, .2, 1);
     }
 
@@ -564,6 +583,7 @@
       overflow: hidden;
       padding-top: 88px;
       position: relative;
+      transition: background var(--transition-theme);
     }
 
     /* Efeito de saída da secção hero ao scrollar - controlado via JS */
@@ -658,7 +678,6 @@
       border-bottom: 1px solid var(--border);
       border-top: 1px solid var(--border);
       padding: 1.5rem 0;
-      transition: background-color .75s cubic-bezier(.4, 0, .2, 1);
     }
 
     .trust-item {
@@ -669,7 +688,7 @@
       gap: 1rem;
       padding: .6rem .9rem;
       border: 1px solid transparent;
-      transition: border-color .38s cubic-bezier(.4, 0, .2, 1), background .38s cubic-bezier(.4, 0, .2, 1);
+      transition: border-color var(--transition-ui), background var(--transition-ui);
       height: 100%;
     }
 
@@ -687,7 +706,7 @@
       height: 44px;
       background: rgba(224, 122, 31, .1);
       border: 1px solid var(--border);
-      transition: background .38s cubic-bezier(.4, 0, .2, 1);
+      transition: background var(--transition-ui);
     }
 
     .trust-item:hover .trust-icon-wrap {
@@ -739,7 +758,6 @@
     .portrait-shell {
       aspect-ratio: 4 / 5;
       border: 1px solid var(--border);
-      transition: border-color .75s cubic-bezier(.4, 0, .2, 1);
       margin-left: auto;
       max-width: 430px;
       padding: 14px;
@@ -772,6 +790,7 @@
       justify-content: center;
       overflow: hidden;
       position: relative;
+      transition: background var(--transition-theme);
     }
 
     .portrait-placeholder i {
@@ -788,7 +807,7 @@
       position: absolute;
       top: 12%;
       will-change: transform;
-      transition: transform .12s linear, box-shadow .38s cubic-bezier(.4, 0, .2, 1);
+      transition: transform .12s linear, box-shadow var(--transition-ui), background var(--transition-theme), border-color var(--transition-theme);
     }
 
     .float-card.secondary {
@@ -814,10 +833,10 @@
 
     #sobre,
     #processo,
-    #localizacao { background: var(--black-2); }
+    #localizacao { background: var(--black-2); transition: background var(--transition-theme); }
     #areas,
     #conteudos,
-    #contato { background: var(--black-3); }
+    #contato { background: var(--black-3); transition: background var(--transition-theme); }
 
     .profile-frame {
       border: 1px solid var(--border);
@@ -844,6 +863,7 @@
       justify-content: center;
       position: relative;
       z-index: 1;
+      transition: background var(--transition-theme);
     }
 
     .profile-placeholder div { color: rgba(246, 243, 238, .55); text-align: center; }
@@ -889,8 +909,8 @@
       justify-content: center;
       margin-bottom: 1.35rem;
       transition:
-        background-color .38s cubic-bezier(.4, 0, .2, 1),
-        color .38s cubic-bezier(.4, 0, .2, 1);
+        background-color var(--transition-ui),
+        color var(--transition-ui);
       width: 54px;
     }
 
@@ -1084,6 +1104,7 @@
       justify-content: center;
       padding: 1.5rem;
       text-align: center;
+      transition: background var(--transition-theme);
     }
 
     .map-placeholder i {
@@ -1129,7 +1150,7 @@
     .loc-item p,
     .contact-info-item p { color: var(--muted); font-size: .9rem; margin: 0; }
     .loc-item a,
-    .contact-info-item a { color: var(--muted); text-decoration: none; transition: color .38s cubic-bezier(.4, 0, .2, 1); }
+    .contact-info-item a { color: var(--muted); text-decoration: none; transition: color var(--transition-ui); }
     .loc-item a:hover,
     .contact-info-item a:hover { color: var(--orange); }
 
@@ -1159,10 +1180,10 @@
       min-height: 48px;
       padding: .8rem .95rem;
       transition:
-        background-color .75s cubic-bezier(.4, 0, .2, 1),
-        border-color .38s cubic-bezier(.4, 0, .2, 1),
-        box-shadow .38s cubic-bezier(.4, 0, .2, 1),
-        color .75s cubic-bezier(.4, 0, .2, 1);
+        background-color var(--transition-theme),
+        border-color var(--transition-ui),
+        box-shadow var(--transition-ui),
+        color var(--transition-theme);
     }
 
     .form-adv textarea.form-control { min-height: 132px; }
@@ -1244,7 +1265,7 @@
       text-decoration: none;
       transition:
         transform .38s cubic-bezier(.34, 1.56, .64, 1),
-        box-shadow .38s cubic-bezier(.4, 0, .2, 1);
+        box-shadow var(--transition-ui);
       width: 60px;
       z-index: 1040;
     }
@@ -1276,7 +1297,7 @@
       font-size: .86rem;
       margin-bottom: .48rem;
       text-decoration: none;
-      transition: color .38s cubic-bezier(.4, 0, .2, 1), transform .38s cubic-bezier(.4, 0, .2, 1);
+      transition: color var(--transition-ui), transform var(--transition-ui);
     }
 
     .footer-link:hover { color: var(--orange); transform: translateX(3px); }
@@ -1291,9 +1312,9 @@
       margin-right: .45rem;
       text-decoration: none;
       transition:
-        background-color .38s cubic-bezier(.4, 0, .2, 1),
-        border-color .38s cubic-bezier(.4, 0, .2, 1),
-        color .38s cubic-bezier(.4, 0, .2, 1);
+        background-color var(--transition-ui),
+        border-color var(--transition-ui),
+        color var(--transition-ui);
       width: 40px;
     }
 
@@ -1560,9 +1581,6 @@
           <div class="col-lg-5 hero-visual reveal">
             <div class="portrait-shell">
               <div class="portrait-placeholder">
-                <!-- Substitua por:
-                <img src="images/foto-advogado.jpg" alt="Dr. [NOME]" style="width:100%;height:100%;object-fit:cover;object-position:top">
-                -->
                 <i class="bi bi-person-badge"></i>
               </div>
               <div class="float-card"><strong>OAB</strong><span>atuacao regular</span></div>
@@ -1631,9 +1649,6 @@
           <div class="col-lg-5 reveal">
             <div class="profile-frame">
               <div class="profile-placeholder">
-                <!-- Substitua por:
-                <img src="images/foto-perfil.jpg" alt="Dr. [NOME]" style="width:100%;height:100%;object-fit:cover;object-position:top">
-                -->
                 <div>
                   <i class="bi bi-person-square"></i>
                   <span>Foto profissional<br>images/foto-perfil.jpg</span>
@@ -1995,12 +2010,19 @@
     setTheme(savedTheme || preferredTheme);
 
     themeToggle.addEventListener("click", () => {
-      // Animação suave do ícone ao trocar de tema
+      // Adiciona classe de transição ao corpo para o efeito de overlay suave
+      document.body.classList.add("theme-transitioning");
       themeToggle.classList.add("switching");
+      
       setTimeout(() => {
         setTheme(document.body.dataset.theme === "light" ? "dark" : "light");
-        themeToggle.classList.remove("switching");
-      }, 220);
+        
+        // Remove as classes após a transição completar
+        setTimeout(() => {
+          document.body.classList.remove("theme-transitioning");
+          themeToggle.classList.remove("switching");
+        }, 600);
+      }, 250);
     });
 
     function updateNavState() {
