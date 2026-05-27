@@ -1182,7 +1182,26 @@
     }
 
     .form-adv .form-control::placeholder { color: rgba(246, 243, 238, .35); }
-    .form-adv .form-select option { background: var(--black-4); color: var(--white); }
+    .form-adv .form-select option {
+      background: var(--black-4);
+      color: var(--white);
+      padding: .5rem;
+    }
+    .form-adv .form-select option:checked {
+      background: linear-gradient(var(--orange), var(--orange));
+      background-color: var(--orange) !important;
+      color: #fff;
+    }
+
+    /* Melhorar visibilidade dos seletores no modo escuro */
+    body[data-theme="dark"] .form-adv .form-select option {
+      background-color: #2a2a32;
+      color: #f6f3ee;
+    }
+    body[data-theme="dark"] .form-adv .form-select option:checked {
+      background: linear-gradient(#e07a1f, #e07a1f);
+      background-color: #e07a1f !important;
+    }
 
     .form-label {
       color: var(--muted);
@@ -1942,8 +1961,8 @@
           <a class="footer-link" href="tel:+55[TELEFONE_SEM_FORMATACAO]"><i class="bi bi-telephone me-2 text-orange"></i>([DDD]) 9 [NUMERO]</a>
           <a class="footer-link" href="mailto:[EMAIL]"><i class="bi bi-envelope me-2 text-orange"></i>[EMAIL]</a>
           <a class="footer-link" href="https://instagram.com/[INSTAGRAM]" target="_blank" rel="noopener"><i class="bi bi-instagram me-2 text-orange"></i>@[INSTAGRAM]</a>
-          <a class="footer-link" href="/privacy-policy.html"><i class="bi bi-shield-check me-2 text-orange"></i>Politica de Privacidade</a>
-          <a class="footer-link" href="/terms.html"><i class="bi bi-file-earmark-text me-2 text-orange"></i>Termos de Uso</a>
+          <a class="footer-link" href="privacy-policy.html"><i class="bi bi-shield-check me-2 text-orange"></i>Politica de Privacidade</a>
+          <a class="footer-link" href="terms.html"><i class="bi bi-file-earmark-text me-2 text-orange"></i>Termos de Uso</a>
         </div>
       </div>
       <div class="footer-bottom d-flex flex-wrap justify-content-between gap-2">
