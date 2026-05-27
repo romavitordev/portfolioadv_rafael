@@ -1,109 +1,70 @@
-# Rafael Pedroso Advocacia
+# Rafael Pedroso Advocacia — Sistema de Atendimento e Captação
 
-Site institucional para advogado, com landing page responsiva, API Node/Express e banco SQL Server para captacao organizada de contatos.
+Este projeto representa a minha visão de uma advocacia moderna: **técnica, transparente e digital**. Desenvolvi este sistema não apenas como um site, mas como uma ferramenta estratégica para organizar o meu atendimento, garantir a privacidade dos meus clientes e estabelecer uma presença digital de alta autoridade.
 
-## Estado atual
+---
 
-O projeto ja possui uma primeira rodada de melhorias aplicada:
+## 🏛️ Como o Sistema Funciona
 
-- SEO on-page com title, description, keywords, canonical, Open Graph e Twitter Card.
-- Schema JSON-LD `LegalService`.
-- `sitemap.xml` e `robots.txt`.
-- Politica de Privacidade e Termos de Uso.
-- CTA principal mais claro.
-- Faixa e secao de confianca com sigilo, atendimento online e metodo de analise.
-- Aviso de sigilo profissional antes do formulario.
-- Formulario com validacao, honeypot anti-spam, consentimento LGPD e fallback para WhatsApp.
-- E-mail automatico de confirmacao para o lead quando SMTP estiver configurado.
-- Rotas administrativas protegidas por `ADMIN_API_KEY`.
-- Rate limit para reduzir spam e abuso.
-- Schema SQL com campos de origem, modalidade e consentimento.
+O sistema foi construído sobre três pilares fundamentais que guiam a minha atuação:
 
-## Configuracao local
+### 1. Experiência do Cliente (Frontend)
+A interface foi desenhada para transmitir sobriedade e confiança. Utilizo uma **Landing Page de Alta Conversão** com:
+- **Design Cinematográfico**: Transições suaves e micro-interações que elevam a percepção de valor.
+- **Foco em Segurança**: Avisos claros de conformidade com a LGPD e sigilo profissional antes de qualquer coleta de dados.
+- **Acessibilidade e Rapidez**: Otimizado para dispositivos móveis e com carregamento ultra-rápido.
 
-1. Instale as dependencias:
+### 2. Inteligência de Captação (API Backend)
+Por trás da interface, existe um motor em **Node.js/Express** que processa cada contato:
+- **Triagem Inteligente**: O formulário coleta dados específicos (área do direito, modalidade de atendimento) que já me preparam para a consulta inicial.
+- **Proteção de Dados**: Implementação de *Rate Limit* e *Honeypot* para evitar spam, mantendo a integridade do banco de dados.
+- **Automação de Retorno**: Assim que o cliente envia os dados, o sistema pode disparar confirmações automáticas (via SMTP), garantindo que o lead não fique sem resposta.
 
-```bash
-npm install
-```
+### 3. Gestão e Organização (Banco de Dados)
+Utilizo um banco **SQL Server** para que nenhum caso se perca:
+- **Histórico Centralizado**: Todos os contatos são armazenados com data, origem e consentimento explícito.
+- **Painel Administrativo**: Rotas protegidas por chave de API (`ADMIN_API_KEY`) permitem que eu ou a minha equipe consultemos os agendamentos de forma segura.
 
-2. Crie o arquivo `.env` a partir do exemplo:
+---
 
-```bash
-copy env.example.txt .env
-```
+## 🚀 O que já está implementado
 
-3. Configure no `.env`:
+- [x] **SEO de Elite**: Meta-tags completas, Open Graph para redes sociais e Schema JSON-LD para o Google entender que sou um serviço jurídico.
+- [x] **Segurança Jurídica**: Páginas de Política de Privacidade e Termos de Uso integradas.
+- [x] **Micro-interações Premium**: Efeitos de hover e scroll que diferenciam o site no mercado.
+- [x] **Modo Escuro/Claro**: Transição cinematográfica de 1.5s para maior conforto visual.
+- [x] **Fallback de Contato**: Se o servidor falhar, o cliente é direcionado automaticamente para o meu WhatsApp.
 
-- `DB_SERVER`, `DB_USER`, `DB_PASSWORD`
-- `ADMIN_API_KEY`
-- `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, `EMAIL_TO`, se quiser receber e-mails
-- `FRONTEND_URL` com o dominio final em producao
+---
 
-4. Execute o `schema.sql` no SQL Server.
+## 🛠️ Configuração Técnica (Para Desenvolvedores)
 
-5. Inicie o servidor:
+Se você estiver a ajudar-me na manutenção deste sistema, siga estes passos:
 
-```bash
-npm start
-```
+1. **Dependências**: `npm install`
+2. **Ambiente**: Configure o `.env` (use o `env.example.txt` como base).
+   - Chaves essenciais: `DB_SERVER`, `ADMIN_API_KEY`, `SMTP_HOST`.
+3. **Banco de Dados**: Execute o script `schema.sql` no seu SQL Server.
+4. **Execução**: `npm start` (O sistema rodará em `http://localhost:3001`).
 
-O site ficara em `http://localhost:3001` e a API em `http://localhost:3001/api`.
+---
 
-## Rotas principais
+## ⚖️ Ética e Publicidade
 
-- `GET /`: landing page.
-- `GET /privacy-policy.html`: Politica de Privacidade.
-- `GET /terms.html`: Termos de Uso.
-- `GET /sitemap.xml`: sitemap para buscadores.
-- `GET /robots.txt`: regras de rastreamento.
-- `POST /api/contatos`: recebe leads do formulario publico.
-- `GET /api/health`: verifica se a API esta respondendo.
-- `GET /api/contatos`: rota interna, exige header `x-admin-key`.
-- `GET /api/agendamentos`: rota interna, exige header `x-admin-key`.
-- `GET /api/depoimentos`: rota interna, exige header `x-admin-key`.
+Este sistema foi construído respeitando rigorosamente o Código de Ética da OAB:
+- **Sem promessas de resultado**: A linguagem é informativa e técnica.
+- **Sem mercantilização**: O foco é na prestação de serviços e na autoridade do advogado.
+- **Transparência Total**: Dados do advogado (OAB, endereço, especialidade) são facilmente verificáveis.
 
-## Personalizacao obrigatoria
+---
 
-Antes de publicar, substitua:
+## 📂 Documentação de Apoio
 
-- `[NUMERO_OAB]`
-- `[CIDADE]`
-- `[ENDERECO_COMPLETO]`
-- `[CEP]`
-- `[WHATSAPP_NUMBER]`
-- `[TELEFONE_SEM_FORMATACAO]`
-- `[DDD]`
-- `[NUMERO]`
-- `[EMAIL]`
-- `[INSTAGRAM]`
-- `https://www.seudominio.com/`
+Para entender a estratégia por trás de cada decisão, consulte:
+- `ANALISE_MELHORIAS.md`: O meu raciocínio sobre a evolução do projeto.
+- `CHECKLIST_QUALIDADE.md`: O que verifico antes de qualquer atualização.
+- `PITCH_CLIENTE.md`: Como apresento o valor deste sistema para parceiros.
 
-Tambem ajuste o mapa, telefone, e-mail, dominio, fotos profissionais e dados do Schema.
-
-## Publicacao
-
-Antes de colocar no ar:
-
-- Validar o site em ambiente com Node.js instalado.
-- Testar banco SQL Server.
-- Testar SMTP real.
-- Publicar com HTTPS.
-- Validar `sitemap.xml` e `robots.txt`.
-- Enviar sitemap ao Google Search Console.
-- Configurar GA4 ou Google Tag Manager.
-- Validar Schema no Rich Results Test.
-
-## Publicidade na advocacia
-
-O front foi ajustado para evitar promessas de resultado, linguagem apelativa e depoimentos promocionais. A secao de confianca usa sinais objetivos como sigilo, clareza e metodo de atendimento.
-
-Antes de publicar, confirme OAB, cidade, telefone, endereco, politica de privacidade, termos de uso e qualificacoes reais do advogado.
-
-## Documentos de apoio
-
-- `ACOES_IMEDIATAS.md`: status do que foi implementado e proximos passos.
-- `ANALISE_MELHORIAS.md`: analise profissional atualizada.
-- `CHECKLIST_QUALIDADE.md`: checklist de qualidade pos-melhorias.
-- `COMPARATIVO_CONCORRENTES.md`: comparativo atualizado com concorrentes.
-- `PITCH_CLIENTE.md`: proposta atualizada para apresentacao ao cliente.
+---
+**Rafael Pedroso**  
+*Advogado — OAB/SP [NUMERO_OAB]*
