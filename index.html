@@ -547,12 +547,6 @@
       color: rgba(24, 21, 18, .85);
     }
 
-    body[data-theme="light"] .btn-outline-adv {
-      border-color: rgba(176, 93, 16, .24);
-      color: rgba(24, 21, 18, .95);
-      background: rgba(224, 122, 31, .08);
-    }
-
     body[data-theme="light"] .btn-outline-adv:hover {
       border-color: var(--orange);
       color: #fff;
@@ -1182,25 +1176,26 @@
     }
 
     .form-adv .form-control::placeholder { color: rgba(246, 243, 238, .35); }
+    
+    /* Corrigir visibilidade dos seletores no modo escuro */
+    .form-adv .form-select {
+      color: var(--white) !important;
+    }
+    
     .form-adv .form-select option {
-      background: var(--black-4);
-      color: var(--white);
+      background-color: #2a2a32;
+      color: #f6f3ee !important;
       padding: .5rem;
     }
-    .form-adv .form-select option:checked {
-      background: linear-gradient(var(--orange), var(--orange));
-      background-color: var(--orange) !important;
-      color: #fff;
+
+    body[data-theme="light"] .form-adv .form-select option {
+      background-color: #ffffff;
+      color: #181512 !important;
     }
 
-    /* Melhorar visibilidade dos seletores no modo escuro */
-    body[data-theme="dark"] .form-adv .form-select option {
-      background-color: #2a2a32;
-      color: #f6f3ee;
-    }
-    body[data-theme="dark"] .form-adv .form-select option:checked {
-      background: linear-gradient(#e07a1f, #e07a1f);
-      background-color: #e07a1f !important;
+    .form-adv .form-select option:checked {
+      background-color: var(--orange) !important;
+      color: #fff !important;
     }
 
     .form-label {
@@ -1737,7 +1732,7 @@
           <div class="col-lg-7 reveal">
             <div class="step-item"><div class="step-num">01</div><div class="step-content"><h4>Consulta Inicial</h4><p>Voce apresenta o caso em ambiente sigiloso e recebe uma primeira orientacao juridica.</p></div></div>
             <div class="step-item"><div class="step-num">02</div><div class="step-content"><h4>Analise Documental</h4><p>Documentos, provas e riscos sao avaliados para construir uma estrategia realista.</p></div></div>
-            <div class="step-item"><div class="step-num">03</div><div class="step-content"><h4>Atuacao Juridica</h4><p>O caso e conduzido com acompanhamento e informacoes claras em cada etapa.</p></div></div>
+            <div class="step-item"><div class="step-num">03</div><div class="step-content"><h4>Atuacao Juridica</h4><p>O caso e conduzido com acompanhamento e informacoes clara em cada etapa.</p></div></div>
             <div class="step-item"><div class="step-num">04</div><div class="step-content"><h4>Conclusao</h4><p>Busca-se o melhor desfecho possivel, seja por acordo, sentenca ou execucao.</p></div></div>
           </div>
         </div>
