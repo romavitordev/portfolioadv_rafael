@@ -1175,6 +1175,70 @@
     .reveal:nth-child(3) { transition-delay: .12s; }
     .reveal:nth-child(4) { transition-delay: .18s; }
 
+    /* Animações de Scroll - Estilo Apple */
+    .scroll-animate {
+      opacity: 0;
+      transform: translate3d(0, 48px, 0) scale(0.95);
+      transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .scroll-animate.in-view {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    .scroll-animate:nth-child(1) { transition-delay: 0s; }
+    .scroll-animate:nth-child(2) { transition-delay: 0.08s; }
+    .scroll-animate:nth-child(3) { transition-delay: 0.16s; }
+    .scroll-animate:nth-child(4) { transition-delay: 0.24s; }
+
+    /* Parallax Hero Exit */
+    .hero-parallax {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-parallax-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: inherit;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Efeito de Fade-out suave ao sair da hero */
+    .hero-exit-fade {
+      opacity: 1;
+      transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .hero-exit-fade.fading-out {
+      opacity: 0.3;
+    }
+
+    /* Cards com movimento suave ao scroll */
+    .card-scroll-animate {
+      transform: translateY(0) translateX(0);
+      opacity: 1;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .card-scroll-animate.scroll-up {
+      transform: translateY(-12px) translateX(0);
+      opacity: 0.8;
+    }
+
+    /* Stagger effect para cards */
+    .card-adv.scroll-animate:nth-child(1) { transition-delay: 0s; }
+    .card-adv.scroll-animate:nth-child(2) { transition-delay: 0.06s; }
+    .card-adv.scroll-animate:nth-child(3) { transition-delay: 0.12s; }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *,
@@ -1188,6 +1252,18 @@
       .reveal {
         opacity: 1;
         transform: none;
+      }
+      .scroll-animate {
+        opacity: 1;
+        transform: none;
+      }
+      .scroll-animate.in-view {
+        opacity: 1;
+        transform: none;
+      }
+      .card-scroll-animate.scroll-up {
+        transform: none;
+        opacity: 1;
       }
     }
 
@@ -1410,9 +1486,9 @@
     <section class="trust-strip">
       <div class="container">
         <div class="row row-cols-1 row-cols-md-3 g-3 align-items-stretch">
-          <div class="col"><div class="trust-item"><i class="bi bi-shield-lock-fill"></i><span>Sigilo profissional e dados tratados conforme LGPD.</span></div></div>
-          <div class="col"><div class="trust-item"><i class="bi bi-camera-video-fill"></i><span>Consulta online para todo o Brasil e presencial em [CIDADE]/SP.</span></div></div>
-          <div class="col"><div class="trust-item"><i class="bi bi-file-earmark-check-fill"></i><span>Analise objetiva de documentos, riscos e proximos passos.</span></div></div>
+          <div class="col"><div class="trust-item"><i class="bi bi-shield-lock-fill"></i><span>Sigilo profissional e conformidade com LGPD garantidos em todos os atendimentos.</span></div></div>
+          <div class="col"><div class="trust-item"><i class="bi bi-camera-video-fill"></i><span>Consultas online em todo o Brasil e atendimento presencial em [CIDADE]/SP.</span></div></div>
+          <div class="col"><div class="trust-item"><i class="bi bi-file-earmark-check-fill"></i><span>Análise estratégica de documentos, riscos e próximos passos.</span></div></div>
         </div>
       </div>
     </section>
@@ -1435,7 +1511,7 @@
           </div>
           <div class="col-lg-7 reveal">
             <span class="section-label">Sobre mim</span>
-            <h2 class="section-title">Atuacao juridica com <em>tecnica</em> e proximidade</h2>
+            <h2 class="section-title">Atuação jurídica com <em>técnica</em> e proximidade</h2>
             <div class="divider-orange"></div>
             <p class="muted mb-3">
               Sou Rafael Pedroso, advogado inscrito na OAB/SP sob o numero [NUMERO_OAB], pos-graduado em Direito do Trabalho e especialista em acoes trabalhistas. Atendo com analise tecnica, comunicacao objetiva e acompanhamento cuidadoso.
@@ -1812,6 +1888,60 @@
         if (instance) instance.hide();
       });
     });
+
+    /* Animacoes de Scroll - Intersection Observer */
+    const observerOptions = {
+      threshold: [0, 0.15, 0.3],
+      rootMargin: "0px 0px -100px 0px"
+    };
+
+    const scrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+        } else {
+          if (entry.target.classList.contains("scroll-animate")) {
+            entry.target.classList.remove("in-view");
+          }
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll(".scroll-animate").forEach((el) => {
+      scrollObserver.observe(el);
+    });
+
+    /* Efeito de Parallax ao sair da Hero */
+    const heroSection = document.getElementById("hero");
+    const trustStrip = document.querySelector(".trust-strip");
+
+    if (heroSection && trustStrip) {
+      const heroHeight = heroSection.offsetHeight;
+      const handleHeroParallax = () => {
+        const scrollPos = window.scrollY;
+        const heroExitPoint = heroHeight * 0.7;
+
+        if (scrollPos > heroExitPoint) {
+          const progress = Math.min((scrollPos - heroExitPoint) / (heroHeight * 0.3), 1);
+          const opacity = 1 - progress * 0.4;
+          heroSection.style.opacity = opacity;
+        } else {
+          heroSection.style.opacity = 1;
+        }
+      };
+
+      window.addEventListener("scroll", handleHeroParallax, { passive: true });
+    }
+
+    /* Animacao dos Cards ao Scroll */
+    const cardsContainer = document.querySelector("#areas .row");
+    if (cardsContainer) {
+      const cards = cardsContainer.querySelectorAll(".card-adv");
+      cards.forEach((card) => {
+        card.classList.add("scroll-animate");
+        scrollObserver.observe(card);
+      });
+    }
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
